@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: server-deployment
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: server # Pod label
+  replicas: 4 # Number of pods to run
+  template:
+    metadata:
+      labels:
+        app: server # Pod label
+    spec:
+      containers:
+        - name: server-container
+          image: jpetazzo/httpenv
+          ports:
+            - containerPort: 80
+          resources:
+            requests:
+              memory: "200M" # 200 mebibytes (MiB)
+              cpu: "250m" # 250 millicpu (.25 cpu or 1/4 of a cpu)
+            limits:
+              memory: "300M" # 300 mebibytes (MiB)
+              cpu: "500m" # 500 millicpu (.50 cpu or 1/2 of a cpu)
