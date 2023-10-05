@@ -10,8 +10,6 @@ spec:
   ports:
     - protocol: TCP
       port: 8888 # Port that the service will listen on
-      # targetPort: 3000 # Port that the pod accepts traffic on
-
 
 # kubectl port-forward service/server-service 3000:8888
 # for i in $(seq 10); do curl -s http://localhost:3000/ | jq .HOSTNAME ;done

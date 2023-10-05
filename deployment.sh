@@ -15,11 +15,23 @@ else
 fi
 
 if [ "$ARGS" == "delete" ]; then
-    echo "Shutting down services...🙃"
+    echo "Removing services...🙃"
     kubectl $ARGS -f service.yml
     kubectl $ARGS -f deployment.yml
 else
     echo "Deploying services...🚀"
     kubectl $ARGS -f service.yml
     kubectl $ARGS -f deployment.yml
+
+    echo ""
+    echo "App running at 🌐:"
+    echo "- Local:   http://localhost:3000/"
+    echo "- Network: http://127.0.0.1:3000/"
+    echo ""
+    echo "Checking if pods is ready 👀 and running port-forward...🔎"
+    # check if pod with label app=server is ready when deploying and
+    # forward port 3000 to 8888 (server) for testing purposes only (not for production)
+    # wait for 60 seconds.
+    kubectl wait --for=condition=ready pod -l app=server --timeout=60s && 
+    kubectl port-forward service/server-service 3000:8888
 fi
